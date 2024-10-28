@@ -1,0 +1,23 @@
+Per ciascun prodotto ti ho messo: Manufacturer, Nome prodotto, Effect, Size.
+Dato che è una demo, Thickness, Setting, Application e Antislip mettiamoli tutti uguali
+di default. Sono tutte piastrelle da pavimento. 
+
+Esempio: Il file si chiama Paul Ceramiche - Big Mud - Concrete - 80x80
+
+Quindi il titolo sarà: Nome prodotto + Size, ossia:
+Big Mud - 80x80
+
+Dopodiché entrando…
+
+Manufacturer: Paul Ceramiche
+Effect: Concrete
+Size: 80x80
+
+Per tutte gli altri filtri seguiamo questo standard trattandosi di una demo:
+
+Thickness: 1cm
+Antislip: R9
+Application: Floor
+Setting: Indoor
+
+Noterai che non ho preso soltanto immagini da Paul Ceramiche, in quanto alcuni effetti non li produce. Per non lasciare effetti vuoti te le ho girate lo stesso.
