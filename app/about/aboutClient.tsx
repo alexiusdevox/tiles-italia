@@ -28,16 +28,9 @@ export default function AboutClient() {
       <div className="bg-[url('/about.jpg?height=1200&width=1600')] bg-cover bg-center">
           <div className="bg-[#C9BB84] bg-opacity-60">
             <div className="container py-20 text-black">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-center">Elegance in Every Tile, Trust in Every Partnership</h1>
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-center">Chi siamo</h1>
               <div className="py-10 text-center mx-auto max-w-[700px] md:text-lg">
-                <p className="mb-3">Leading B2B Platform for Italian Porcelain Stoneware Tiles</p>
-                <p className="mb-3"><span className="font-bold">Tiles Italia</span> <span className="font-bold">connects</span> top tile <span className="font-bold">manufacturers</span> with <span className="font-bold">construction professionals</span>, ensuring <span className="font-bold">quality</span> materials and <span className="font-bold">reliable</span> business relationships.</p>
-              </div>
-              <div className="flex flex-col lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <Link href="/products" className="bg-black border-black hover:bg-black/80 py-3 px-12 text-base text-white text-center">
-                  Shop now
-                </Link>
-                <Link href="/sell" className="bg-transparent border border-black hover:bg-black/20 py-3 px-12 text-base text-black text-center">Sell now</Link>
+                <p className="mb-3">is the exclusive <span className="font-bold">B2B platform</span> for Italian porcelain stoneware tiles, crafted to meet the needs of construction professionals, interior designers, and premium material distributors.</p>
               </div>
             </div>
           </div>
@@ -57,7 +50,7 @@ export default function AboutClient() {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/2">
               <p className="text-lg mb-4">
-                Born from a passion for Italian excellence in design and production of building materials, TileVista began its journey in 2010. Since then, we have consistently expanded our network of suppliers and customers, always keeping our commitment to quality and innovation at the core of our philosophy.
+              Born from a passion for Italian excellence in design and building materials, Tiles Italia stands out for its commitment to quality and innovation. With a robust network of suppliers and clients, the company has established itself as a trusted source for premium materials that embody the essence of Italian craftsmanship.
               </p>
             </div>
             <div className="md:w-1/2">
