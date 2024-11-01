@@ -6,9 +6,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { LayoutGrid, LayoutList } from "lucide-react";
 
 interface Product {
-  id: string;
+  id: number;
+  name: string;
+  brand: string;
+  surface: string;
+  effect: string;
+  thickness: number;
   price: number;
-  created_at: string;
+  image: string;
+  antislip: string;
+  slug: string;
+  application: string;
+  setting: string;
+  created_at?: string;
 }
 
 interface ToolbarProps {
@@ -37,8 +47,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
   const handleSortChange = (value: string) => {
     setSortBy(value);
     const sorted = [...filteredProducts].sort((a, b) => {
-      const dateA = new Date(a.created_at).getTime();
-      const dateB = new Date(b.created_at).getTime();
+      const dateA = new Date(a.created_at || 0).getTime();
+      const dateB = new Date(b.created_at || 0).getTime();
+      
       
       if (value === 'newest') {
         return dateB - dateA;
