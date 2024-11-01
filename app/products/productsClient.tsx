@@ -30,6 +30,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
+import { Product } from '@/lib/models/ProductModel';
 
 type FilterState = {
     brand: string[];
