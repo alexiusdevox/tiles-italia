@@ -2,26 +2,44 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Skeleton } from "@/components/ui/skeleton";
+import Head from 'next/head'; // Importa Head per aggiornare il titolo lato server
 
-export default function DynamicTitle({ defaultTitle }: { defaultTitle: string }) {
+interface DynamicTitleProps {
+  defaultTitle?: string;
+  pageTitle?: string;
+}
+
+export default function DynamicTitlecrumb({
+  defaultTitle = 'Page', 
+  pageTitle: externalPageTitle
+}: DynamicTitleProps) {
   const pathname = usePathname();
-  const [pageTitle, setPageTitle] = useState(defaultTitle);
+  const [pageTitle, setPageTitle] = useState(externalPageTitle || defaultTitle);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Aggiorna il titolo della pagina corrente usando il document.title
+    setLoading(true);
     setPageTitle(document.title);
+    setLoading(false);
   }, [pathname]);
 
   const pathSegments = pathname.split('/').filter(segment => segment !== '');
 
-  // Non mostrare il titolo per home, about e slug dinamici come /products/[slug]
   if (pathname === '/' || pathname === '/about' || pathname.startsWith('/products/')) {
     return null;
   }
 
   return (
     <div className="container">
-      <h1 className="text-5xl font-semibold text-[#7A7157]">{pageTitle}</h1>
+      <Head>
+        <title>{pageTitle}</title> {/* Titolo per SEO */}
+      </Head>
+      {loading ? (
+        <Skeleton className="h-12 w-48" />
+      ) : (
+        <h1 className="text-5xl font-semibold text-[#7A7157]">{pageTitle}</h1>
+      )}
     </div>
   );
 }

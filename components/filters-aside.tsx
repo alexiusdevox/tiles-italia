@@ -77,7 +77,7 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
     '5x15 cm', '5x20 cm', '5x25 cm', '5x30 cm', '6x24 cm', '6x25 cm', '7x15 cm', '7x30 cm',
     '7,5x20 cm', '7,5x30 cm', '10x10 cm', '10x20 cm', '10x30 cm', '14,5x19,4 cm', '15x15 cm',
     '15x20 cm', '15x30 cm', '15x61 cm', '17x17 cm', '20x20 cm', '25x40 cm', '30x60 cm',
-    '50x120 cm', '60x60 cm', '60x119.5 cm', '60x120 cm', '120x240 cm', '120x278 cm', '160x320 cm'
+    '50x120 cm', '60x60 cm', '60x119,5 cm', '60x120 cm', '120x240 cm', '120x278 cm', '160x320 cm'
   ];
 
   const floorSizes = [

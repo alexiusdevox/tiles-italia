@@ -8,6 +8,9 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import "./globals.css";
 import Footer from "@/components/footer/footer";
+import { Toaster } from "@/components/ui/toaster";
+import DynamicBreadcrumb from "@/components/dynamic-breadcrumb";
+import DynamicTitle from "@/components/dynamic-title";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -30,7 +33,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
             <div className="flex gap-5 items-center font-semibold">
@@ -43,9 +45,12 @@ export default function RootLayout({
           </div>
         </nav>
         <main>
+        <DynamicBreadcrumb pageTitle={metadata.title as string} />
+        <DynamicTitle pageTitle={metadata.title as string} />
           {children}
         </main >
         <Footer />
+        <Toaster />
       </body >
     </html >
   );
