@@ -31,22 +31,6 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
-type Product = {
-    id: number;
-    name: string;
-    brand: string;
-    surface: string;
-    effect: string;
-    thickness: number;
-    price: number;
-    image: string;
-    antislip: string;
-    slug: string;
-    application: string;
-    setting: string;
-    created_at?: string;
-};
-
 type FilterState = {
     brand: string[];
     surface: string[];

@@ -3,18 +3,19 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export type Product = {
-  id?: string
-  brand: string
-  name: string
-  slug: string
-  image: string
-  banner?: string
-  price: number
-  description: string
-  category: string
-  rating: number
-  numReviews: number
-  countInStock: number
+  id: number;
+  name: string;
+  brand: string;
+  surface: string;
+  effect: string;
+  thickness: number;
+  price: number;
+  image: string;
+  antislip: string;
+  slug: string;
+  application: string;
+  setting: string;
+  created_at?: string;
 }
 
 // Funzione per ottenere tutti i prodotti
