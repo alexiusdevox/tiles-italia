@@ -54,7 +54,7 @@ export default function DynamicBreadcrumb({
           </BreadcrumbLink>
           <meta itemProp="name" content="Home" />
           <meta itemProp="position" content="1" />
-          <ChevronRight className="h-4 w-4 mr-2" />
+          <ChevronRight className="h-3 w-3 mr-2" />
         </BreadcrumbItem>
 
         {pathSegments.map((segment, index) => {
@@ -74,16 +74,16 @@ export default function DynamicBreadcrumb({
               itemType="http://schema.org/ListItem"
             >
               {isLast ? (
-                <BreadcrumbPage className="text-[#7A7157] text-base" itemProp="name">
+                <BreadcrumbPage className="text-[#7A7157] text-sm" itemProp="name">
                   {segmentTitle}
                 </BreadcrumbPage>
               ) : (
-                <BreadcrumbLink href={href} itemProp="item" itemScope itemType="http://schema.org/Thing">
+                <BreadcrumbLink className='text-gray-500 text-sm' href={href} itemProp="item" itemScope itemType="http://schema.org/Thing">
                   {segmentTitle}
                 </BreadcrumbLink>
               )}
               <meta itemProp="position" content={(index + 2).toString()} />
-              {!isLast && <ChevronRight className="h-4 w-4" />}
+              {!isLast && <ChevronRight className="h-3 w-3 mr-2" />}
             </BreadcrumbItem>
           );
         })}
