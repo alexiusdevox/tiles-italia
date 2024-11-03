@@ -245,15 +245,15 @@ export default function ProductClient() {
             </div>
             <div className="flex flex-col gap-4">
               <div className="lg:sticky lg:top-20">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between items-center">
+                <div className="flex flex-col sm:flex-row">
                   <div className="flex flex-col">
-                    <h1 className="text-3xl font-bold">{product.name}</h1>
+                    <h1 className="text-2xl sm:text-2xl font-bold text-[#7A7157]">{product.name}</h1>
                     <div className='space-x-2 space-y-2'>
                       <Badge variant="secondary" className="bg-green-100 text-green-800 self-start mt-2 sm:mt-0">Sustainability</Badge>
                       <Badge variant="secondary" className="bg-gray-100 text-gray-800 self-start mt-2 sm:mt-0">Premium</Badge>
                       <Badge variant="secondary" className="bg-red-100 text-red-800 self-start mt-2 sm:mt-0">Made in Italy</Badge>
                     </div>
-                    <p className="text-xl sm:text-2xl font-semibold mt-2">€{product.price.toFixed(2)} per m²</p>
+                    <p className="text-4xl sm:text-4xl font-bold mt-2">€{product.price.toFixed(2)} per m²</p>
                   </div>
                 </div>
                 <p className="text-muted-foreground mt-4">{product.description}</p>
