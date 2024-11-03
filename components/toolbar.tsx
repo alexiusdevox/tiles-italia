@@ -4,22 +4,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LayoutGrid, LayoutList } from "lucide-react";
-
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  surface: string;
-  effect: string;
-  thickness: number;
-  price: number;
-  image: string;
-  antislip: string;
-  slug: string;
-  application: string;
-  setting: string;
-  created_at?: string;
-}
+import { Product } from '@/lib/models/ProductModel';
 
 interface ToolbarProps {
   products: Product[];

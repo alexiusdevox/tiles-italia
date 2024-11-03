@@ -22,6 +22,18 @@ interface SizeData {
   squareMeters: number;
 }
 
+interface ProductData extends Product {
+  size: string;
+  surface: string;
+  thickness: string;
+  square_meters: number;
+  image: string
+  video?: string;
+  application?: string;
+  setting?: string;
+  effect?: string;
+  antislip?: string;
+}
 
 interface Position {
   x: number;
@@ -30,7 +42,7 @@ interface Position {
 
 export default function ProductClient() {
   const params = useParams();
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<ProductData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { addItem2, removeItem, items } = useWishlistStore();
   const { addItem } = useRecentViewedStore();
@@ -75,14 +87,14 @@ export default function ProductClient() {
         if (error) {
           console.error('Error fetching product:', error);
         } else {
-          const productData = data as Product;
+          const productData = data as ProductData;
           setProduct(productData);
           setImages(Array.isArray(productData.image) ? productData.image : [productData.image]);
 
           // Create array of size and square_meters pairs
           const sizes = Array.isArray(productData.size) ? productData.size : [productData.size];
-          const squareMetersArray = Array.isArray(productData.square_meters) 
-            ? productData.square_meters 
+          const squareMetersArray = Array.isArray(productData.square_meters)
+            ? productData.square_meters
             : [productData.square_meters];
 
           const sizeDataArray = sizes.map((size, index) => ({
@@ -237,7 +249,7 @@ export default function ProductClient() {
                   <div className="flex flex-col">
                     <h1 className="text-3xl font-bold">{product.name}</h1>
                     <div className='space-x-2 space-y-2'>
-                    <Badge variant="secondary" className="bg-green-100 text-green-800 self-start mt-2 sm:mt-0">Sustainability</Badge>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800 self-start mt-2 sm:mt-0">Sustainability</Badge>
                       <Badge variant="secondary" className="bg-gray-100 text-gray-800 self-start mt-2 sm:mt-0">Premium</Badge>
                       <Badge variant="secondary" className="bg-red-100 text-red-800 self-start mt-2 sm:mt-0">Made in Italy</Badge>
                     </div>
@@ -265,26 +277,9 @@ export default function ProductClient() {
                     </Select>
                   </div>
                 )}
-                {availableSurfaces.length > 0 && (
-                  <div className="mt-6">
-                    <h3 className="font-semibold mb-2">Thickness:</h3>
-                    <Select value={selectedSurface} onValueChange={setSelectedSurface}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select surface" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {availableSurfaces.map((surface) => (
-                          <SelectItem key={surface} value={surface}>
-                            {surface}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
                 {availableThicknesses.length > 0 && (
                   <div className="mt-6">
-                    <h3 className="font-semibold mb-2">Surface:</h3>
+                    <h3 className="font-semibold mb-2">Thickness:</h3>
                     <Select value={selectedThickness} onValueChange={setSelectedThickness}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select thickness" />
@@ -299,6 +294,24 @@ export default function ProductClient() {
                     </Select>
                   </div>
                 )}
+                {availableSurfaces.length > 0 && (
+                  <div className="mt-6">
+                    <h3 className="font-semibold mb-2">Surface:</h3>
+                    <Select value={selectedSurface} onValueChange={setSelectedSurface}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select surface" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableSurfaces.map((surface) => (
+                          <SelectItem key={surface} value={surface}>
+                            {surface}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-6">
                   <div className="mt-6">
                     <h3 className="font-semibold mb-2">Square Meters:</h3>
@@ -349,7 +362,7 @@ export default function ProductClient() {
                   </div>
                 </div>
                 <div className="mt-6 flex flex-col space-y-2">
-                <Button variant="outline">Order a sample</Button>
+                  <Button variant="outline">Order a sample</Button>
                   <Button
                     className="w-full mt-8"
                     onClick={() => {

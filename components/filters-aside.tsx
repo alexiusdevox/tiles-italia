@@ -27,24 +27,23 @@ interface FilterState {
   environment: string;
 }
 
+interface FilterCounts {
+  effect: { [key: string]: number };
+  brand: { [key: string]: number };
+  surface: { [key: string]: number };
+  thickness: { [key: string]: number };
+  antislip: { [key: string]: number };
+  application: { [key: string]: number };
+  setting: { [key: string]: number };
+  size: { [key: string]: number };
+  environment: { [key: string]: number };
+}
 
 interface FiltersAsideProps {
   filters: FilterState;
   setFilters: Dispatch<SetStateAction<FilterState>>;
   products: Product[];
   removeFilter: (filterType: keyof FilterState, value: string | number) => void;
-}
-
-interface FiltersAsideProps {
-  filters: FilterState;
-  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-  products: Product[];
-}
-
-interface FilterCounts {
-  [key: string]: {
-    [value: string]: number;
-  };
 }
 
 export default function FiltersAside({ filters, setFilters, products }: FiltersAsideProps) {
@@ -101,18 +100,24 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
 
       products.forEach(product => {
         // Count for checkbox filters
-        ['effect', 'brand', 'surface', 'thickness', 'antislip', 'size'].forEach(key => {
-          const value = product[key as keyof Product];
+        ['effect', 'brand', 'surface', 'antislip', 'size'].forEach(key => {
+          const value = String(product[key as keyof Product]);
           if (value) {
-            newCounts[key][value] = (newCounts[key][value] || 0) + 1;
+            newCounts[key as keyof FilterCounts][value] = (newCounts[key as keyof FilterCounts][value] || 0) + 1;
           }
         });
 
+        // Handle thickness separately since it's a number
+        if (product.thickness) {
+          const thicknessStr = String(product.thickness);
+          newCounts.thickness[thicknessStr] = (newCounts.thickness[thicknessStr] || 0) + 1;
+        }
+
         // Count for radio filters
         ['application', 'setting'].forEach(key => {
-          const value = product[key as keyof Product];
+          const value = String(product[key as keyof Product]);
           if (value) {
-            newCounts[key][value] = (newCounts[key][value] || 0) + 1;
+            newCounts[key as keyof FilterCounts][value] = (newCounts[key as keyof FilterCounts][value] || 0) + 1;
           }
         });
       });
@@ -130,21 +135,27 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
     }));
   };
 
-  const renderFilterCheckboxes = (filterType: keyof FilterState, options: string[]) => {
+  const renderFilterCheckboxes = (
+    filterType: keyof Omit<FilterCounts, 'application' | 'setting'>, 
+    options: (string | number)[]
+  ) => {
     return options.map((option) => (
       <div className="flex items-center justify-between space-x-2" key={option}>
         <div className="flex items-center space-x-2">
           <Checkbox
             id={`${filterType}-${option}`}
             checked={Array.isArray(filters[filterType])
-              ? (filters[filterType] as string[]).includes(option)
+              ? (filters[filterType] as Array<string | number>).includes(option)
               : filters[filterType] === option}
             onCheckedChange={(checked) => {
               if (Array.isArray(filters[filterType])) {
                 if (checked) {
-                  handleFilterChange(filterType, [...filters[filterType] as string[], option]);
+                  handleFilterChange(filterType, [...filters[filterType] as Array<string | number>, option]);
                 } else {
-                  handleFilterChange(filterType, (filters[filterType] as string[]).filter(item => item !== option));
+                  handleFilterChange(
+                    filterType,
+                    (filters[filterType] as Array<string | number>).filter(item => item !== option)
+                  );
                 }
               } else {
                 handleFilterChange(filterType, checked ? option : '');
@@ -156,7 +167,7 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
           </Label>
         </div>
         <span className="text-sm text-muted-foreground pr-1">
-          {counts[filterType][option] || 0}
+          {(counts[filterType] && counts[filterType][String(option)]) || 0}
         </span>
       </div>
     ));
@@ -211,56 +222,73 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
           </AccordionItem>
 
           <AccordionItem value="surface">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Surface</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Surface
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('surface', ['Matt', 'Glossy'])}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="effect">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Effect</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Effect
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('effect', ['Marble', 'Concrete', 'Wood', 'Stone', 'Metal', 'Terrazzo', 'Terracotta', 'Decor'])}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="size">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Size</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Size
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('size', filters.application === 'Wall' ? wallSizes : floorSizes)}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="thickness">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Thickness</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Thickness
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('thickness', [6, 8.5, 9].map(value => `${value} mm`).concat([1, 2].map(value => `${value} cm`)))}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="antislip">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Antislip</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Antislip
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('antislip', ['R9', 'R10', 'R11', 'R12'])}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="brand">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Brand</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Brand
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               {renderFilterCheckboxes('brand', ['Cotto Furnò', 'Marazzi', 'Paul Ceramiche'])}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="priceRange">
-            <AccordionTrigger className="text-base hover:no-underline font-semibold">Price Range</AccordionTrigger>
+            <AccordionTrigger className="text-base hover:no-underline font-semibold">
+              Price Range
+            </AccordionTrigger>
             <AccordionContent className="space-y-1">
               <div className="flex items-center space-x-4">
                 <Input
                   type="number"
                   value={filters.priceRange[0] ?? ''}
                   placeholder="Min"
-                  onChange={(e) => handleFilterChange('priceRange', [e.target.value ? Number(e.target.value) : null, filters.priceRange[1]])}
+                  onChange={(e) => handleFilterChange('priceRange', [
+                    e.target.value ? Number(e.target.value) : null,
+                    filters.priceRange[1]
+                  ])}
                   className="w-20"
                 />
                 <span>to</span>
@@ -268,7 +296,10 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
                   type="number"
                   value={filters.priceRange[1] ?? ''}
                   placeholder="Max"
-                  onChange={(e) => handleFilterChange('priceRange', [filters.priceRange[0], e.target.value ? Number(e.target.value) : null])}
+                  onChange={(e) => handleFilterChange('priceRange', [
+                    filters.priceRange[0],
+                    e.target.value ? Number(e.target.value) : null
+                  ])}
                   className="w-20"
                 />
               </div>

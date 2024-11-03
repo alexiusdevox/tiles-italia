@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/drawer"
 import { Product } from '@/lib/models/ProductModel';
 
+
 type FilterState = {
     brand: string[];
     surface: string[];
@@ -173,11 +174,12 @@ export default function ProductList() {
     const applyFilters = () => {
         const filtered = products.filter(product => {
             return (
+                // Controlliamo se l'array è vuoto O se include il valore (convertito allo stesso tipo)
                 (filters.brand.length === 0 || filters.brand.includes(product.brand)) &&
-                (filters.surface.length === 0 || filters.surface.includes(product.surface)) &&
-                (filters.effect.length === 0 || filters.effect.includes(product.effect)) &&
-                (filters.thickness.length === 0 || filters.thickness.includes(product.thickness)) &&
-                (filters.antislip.length === 0 || filters.antislip.includes(product.antislip)) &&
+                (filters.surface.length === 0 || filters.surface.some(s => s === product.surface)) &&
+                (filters.effect.length === 0 || filters.effect.some(e => e === product.effect)) &&
+                (filters.thickness.length === 0 || filters.thickness.includes(Number(product.thickness))) &&
+                (filters.antislip.length === 0 || filters.antislip.some(a => a === product.antislip)) &&
                 (filters.priceRange[0] === null || product.price >= filters.priceRange[0]) &&
                 (filters.priceRange[1] === null || product.price <= filters.priceRange[1]) &&
                 (!filters.application || product.application === filters.application) &&
@@ -332,7 +334,7 @@ export default function ProductList() {
                                     brand={product.brand}
                                     name={product.name}
                                     price={product.price}
-                                    image={product.image}
+                                    image={Array.isArray(product.image) ? product.image[0] : product.image}
                                     slug={product.slug}
                                     layout={layout}
                                 />

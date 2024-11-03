@@ -6,16 +6,28 @@ export type Product = {
   id: number;
   name: string;
   brand: string;
-  surface: string;
-  effect: string;
-  thickness: number;
   price: number;
-  image: string;
-  antislip: string;
   slug: string;
-  application: string;
-  setting: string;
   created_at?: string;
+  description?: string;
+  sizes: string;  // JSON string array
+  images: string[];
+
+
+
+
+
+  size: string | string[];
+  surface: string | string[];
+  thickness: string;
+  square_meters: number | number[];
+  image: string | string[];
+  video?: string;
+  application?: string;
+  setting?: string;
+  effect?: string;
+  antislip?: string;
+
 }
 
 // Funzione per ottenere tutti i prodotti
