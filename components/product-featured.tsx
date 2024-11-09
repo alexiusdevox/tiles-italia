@@ -1,8 +1,11 @@
+"use client"
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useWishlistStore } from '@/lib/wishlistStore';
 import { Heart } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast"
 
 type ProductCardProps = {
   id: number;
@@ -14,17 +17,26 @@ type ProductCardProps = {
 };
 
 export default function ProductFeatured({ id, brand, name, price, image, slug, }: ProductCardProps) {
-  const { addItem2, removeItem, items } = useWishlistStore();
+  const { addItem2, removeItem, items } = useWishlistStore()
+  const { toast } = useToast()
 
-  const isInWishlist = items.some(item => item.id === id);
+  const isInWishlist = items.some(item => item.id === id)
 
   const handleToggleWishlist = () => {
     if (isInWishlist) {
-      removeItem(id);
+      removeItem(id)
+      toast({
+        title: "Removed from Wishlist",
+        description: `${name} has been removed from your wishlist.`,
+      })
     } else {
-      addItem2({ id, brand, name, price, image, quantity: 1 });
+      addItem2({ id, brand, name, price, image, quantity: 1 })
+      toast({
+        title: "Added to Wishlist",
+        description: `${name} has been added to your wishlist.`,
+      })
     }
-  };
+  }
   
   return (
     <Card key={id} className="overflow-hidden list">

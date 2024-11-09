@@ -1,30 +1,42 @@
-import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
-import { useWishlistStore } from '@/lib/wishlistStore';
-import { Heart } from 'lucide-react';
+"use client"
+
+import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { useWishlistStore } from '@/lib/wishlistStore'
+import { Heart } from 'lucide-react'
+import { useToast } from "@/hooks/use-toast"
 
 type ProductCardProps = {
-  id: number;
-  brand: string;
-  name: string;
-  price: number;
-  image: string;
-  slug: string;
-  layout: 'grid' | 'list';
-};
+  id: number
+  brand: string
+  name: string
+  price: number
+  image: string
+  slug: string
+  layout: 'grid' | 'list'
+}
 
-export default function ProducItem({ id, brand, name, price, image, slug, layout }: ProductCardProps) {
-  const { addItem2, removeItem, items } = useWishlistStore();
+export default function ProductItem({ id, brand, name, price, image, slug, layout }: ProductCardProps) {
+  const { addItem2, removeItem, items } = useWishlistStore()
+  const { toast } = useToast()
 
-  const isInWishlist = items.some(item => item.id === id);
+  const isInWishlist = items.some(item => item.id === id)
 
   const handleToggleWishlist = () => {
     if (isInWishlist) {
-      removeItem(id);
+      removeItem(id)
+      toast({
+        title: "Removed from Wishlist",
+        description: `${name} has been removed from your wishlist.`,
+      })
     } else {
-      addItem2({ id, brand, name, price, image, quantity: 1 });
+      addItem2({ id, brand, name, price, image, quantity: 1 })
+      toast({
+        title: "Added to Wishlist",
+        description: `${name} has been added to your wishlist.`,
+      })
     }
-  };
+  }
 
   return (
     <Card className={`overflow-hidden ${layout === 'list' ? 'flex' : ''}`}>
@@ -33,7 +45,7 @@ export default function ProducItem({ id, brand, name, price, image, slug, layout
           href={`/products/${slug}`} 
           className={`block relative ${layout === 'list' ? 'flex items-center w-full' : ''}`}
         >
-          <div className={`relative ${layout === 'grid' ? 'aspect-square' : 'w-1/3'}`}>
+          <div className={`relative ${layout === 'grid' ? 'aspect-square' : 'aspect-square w-1/3 border-r-[1px]'}`}>
             <img
               src={image}
               alt={name}
@@ -43,8 +55,8 @@ export default function ProducItem({ id, brand, name, price, image, slug, layout
             <button 
               className="absolute end-0 top-0 z-10 p-2 text-gray-900 transition hover:text-gray-900/75"
               onClick={(e) => {
-                e.preventDefault();
-                handleToggleWishlist();
+                e.preventDefault()
+                handleToggleWishlist()
               }}
             >
               <Heart className={`size-5 ${isInWishlist ? 'fill-red-500 text-red-500' : 'text-red-500'}`} />
@@ -58,5 +70,5 @@ export default function ProducItem({ id, brand, name, price, image, slug, layout
         </Link>
       </CardContent>
     </Card>
-  );
+  )
 }

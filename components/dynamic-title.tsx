@@ -26,7 +26,7 @@ export default function DynamicTitlecrumb({
 
   const pathSegments = pathname.split('/').filter(segment => segment !== '');
 
-  if (pathname === '/' || pathname === '/about' || pathname.startsWith('/products/')) {
+  if (pathname === '/' || pathname === '/about' || pathname === '/sign-in' || pathname.startsWith('/products/')) {
     return null;
   }
 

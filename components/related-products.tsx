@@ -53,7 +53,6 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {relatedProducts.map((product) => (
             <Link href={`/products/${product.slug}`} key={product.id}>
-
               <Card key={product.id} className="overflow-hidden">
                 <div className="relative h-full flex flex-col">
                   <div className="relative aspect-square w-full overflow-hidden bg-gray-100">
@@ -70,7 +69,6 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
                 </div>
               </Card>
             </Link>
-
           ))}
         </div>
       )}

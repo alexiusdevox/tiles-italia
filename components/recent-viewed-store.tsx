@@ -9,6 +9,9 @@ export function RecentlyViewed() {
     if (items.length === 0) return null;
 
     return (
+
+
+        
         <div className="mt-12">
             <h2 className="text-2xl font-bold mb-6">Recently Viewed</h2>
             <div className="flex gap-4 overflow-x-auto pb-4">

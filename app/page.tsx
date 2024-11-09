@@ -61,8 +61,10 @@ export default function Home() {
       <section id="hero" className="">
         <div className="bg-[url('/homepage.webp?height=1200&width=1600')] bg-cover bg-center grayscale">
           <div className="bg-black bg-opacity-85">
-            <div className="container py-20 text-white">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white text-center">Elegance in Every Tile, Trust in Every Partnership</h1>
+            <div className="container py-20 text-white">              
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-center mb-6">Elegance in Every Tile, Trust in Every Partnership</h1>
+
+              
               <div className="py-10 text-center mx-auto max-w-[700px] text-white md:text-lg">
                 <p className="mb-3">Explore the unmatched beauty of <span className="font-bold">Italian</span> porcelain stoneware, crafted to <span className="font-bold">inspire</span> and built to <span className="font-bold">endure</span>.</p>
                 <p className="mb-3"><span className="font-bold">Tiles Italia</span> <span className="font-bold">connects</span> top tile <span className="font-bold">manufacturers</span> with <span className="font-bold">construction professionals</span>, ensuring <span className="font-bold">quality</span> materials and <span className="font-bold">reliable</span> business relationships.</p>

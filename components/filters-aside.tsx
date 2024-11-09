@@ -99,19 +99,83 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
       };
 
       products.forEach(product => {
-        // Count for checkbox filters
-        ['effect', 'brand', 'surface', 'antislip', 'size'].forEach(key => {
+        // Handle surface counting
+        let productSurfaces = [];
+        try {
+          if (typeof product.surface === 'string') {
+            const parsed = JSON.parse(product.surface);
+            productSurfaces = Array.isArray(parsed) ? parsed : [parsed];
+          } else if (Array.isArray(product.surface)) {
+            productSurfaces = product.surface;
+          } else if (product.surface) {
+            productSurfaces = [product.surface];
+          }
+        } catch (e) {
+          productSurfaces = Array.isArray(product.surface)
+            ? product.surface
+            : [product.surface];
+        }
+
+        productSurfaces.forEach(surface => {
+          if (surface) {
+            newCounts.surface[surface] = (newCounts.surface[surface] || 0) + 1;
+          }
+        });
+
+        // Handle thickness counting
+        let productThicknesses = [];
+        try {
+          if (typeof product.thickness === 'string') {
+            const parsed = JSON.parse(product.thickness);
+            productThicknesses = Array.isArray(parsed) ? parsed : [parsed];
+          } else if (Array.isArray(product.thickness)) {
+            productThicknesses = product.thickness;
+          } else if (product.thickness) {
+            productThicknesses = [product.thickness];
+          }
+        } catch (e) {
+          productThicknesses = Array.isArray(product.thickness)
+            ? product.thickness
+            : [product.thickness];
+        }
+
+        productThicknesses.forEach(thickness => {
+          if (thickness) {
+            const thicknessStr = String(thickness);
+            newCounts.thickness[thicknessStr] = (newCounts.thickness[thicknessStr] || 0) + 1;
+          }
+        });
+
+        // Handle size counting
+        let productSizes = [];
+        try {
+          if (typeof product.size === 'string') {
+            const parsed = JSON.parse(product.size);
+            productSizes = Array.isArray(parsed) ? parsed : [parsed];
+          } else if (Array.isArray(product.size)) {
+            productSizes = product.size;
+          } else if (product.size) {
+            productSizes = [product.size];
+          }
+        } catch (e) {
+          productSizes = Array.isArray(product.size)
+            ? product.size
+            : [product.size];
+        }
+
+        productSizes.forEach(size => {
+          if (size) {
+            newCounts.size[size] = (newCounts.size[size] || 0) + 1;
+          }
+        });
+
+        // Handle other countable properties
+        ['effect', 'brand', 'antislip'].forEach(key => {
           const value = String(product[key as keyof Product]);
           if (value) {
             newCounts[key as keyof FilterCounts][value] = (newCounts[key as keyof FilterCounts][value] || 0) + 1;
           }
         });
-
-        // Handle thickness separately since it's a number
-        if (product.thickness) {
-          const thicknessStr = String(product.thickness);
-          newCounts.thickness[thicknessStr] = (newCounts.thickness[thicknessStr] || 0) + 1;
-        }
 
         // Count for radio filters
         ['application', 'setting'].forEach(key => {
@@ -128,6 +192,7 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
     calculateCounts();
   }, [products]);
 
+
   const handleFilterChange = (filterType: keyof FilterState, value: any) => {
     setFilters((prev: FilterState) => ({
       ...prev,
@@ -136,7 +201,7 @@ export default function FiltersAside({ filters, setFilters, products }: FiltersA
   };
 
   const renderFilterCheckboxes = (
-    filterType: keyof Omit<FilterCounts, 'application' | 'setting'>, 
+    filterType: keyof Omit<FilterCounts, 'application' | 'setting'>,
     options: (string | number)[]
   ) => {
     return options.map((option) => (

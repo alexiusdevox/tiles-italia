@@ -13,7 +13,7 @@ export default function CategoryGrid() {
         { name: "Terrazzo", imgSrc: "/terrazzo.webp", slug: "/products?effect=Terrazzo" },
         { name: "Terracotta", imgSrc: "/cotto.webp", slug: "/products?effect=Terracotta" },
         { name: "Decor", imgSrc: "/decor.webp", slug: "/products?effect=Decor" },
-    ]
+    ];
 
     return (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
