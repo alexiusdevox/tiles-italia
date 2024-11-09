@@ -336,9 +336,13 @@ export default function ProductList() {
       // Update setting filter
       const settings = new Set(searchResults.map(p => p.setting))
       if (settings.size === 1 && !settings.has(filters.setting)) {
-        newFilters.setting = settings.values().next().value
-        filtersUpdated = true
+        const settingValue = settings.values().next().value;
+        if (settingValue !== undefined) { // Controllo aggiunto
+          newFilters.setting = settingValue;
+          filtersUpdated = true;
+        }
       }
+      
 
       if (filtersUpdated) {
         setFilters(newFilters)
