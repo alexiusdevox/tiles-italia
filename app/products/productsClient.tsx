@@ -325,9 +325,13 @@ export default function ProductList() {
       // Update application filter
       const applications = new Set(searchResults.map(p => p.application))
       if (applications.size === 1 && !applications.has(filters.application)) {
-        newFilters.application = applications.values().next().value
-        filtersUpdated = true
+        const applicationValue = applications.values().next().value;
+        if (applicationValue !== undefined) { // Controllo aggiunto
+          newFilters.application = applicationValue;
+          filtersUpdated = true;
+        }
       }
+      
 
       // Update setting filter
       const settings = new Set(searchResults.map(p => p.setting))
