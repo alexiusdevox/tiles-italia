@@ -299,10 +299,12 @@ export default function ProductList() {
   }
 
   const handleSuggestionClick = (suggestion: string) => {
-    setSearchInput(suggestion)
-    setShowSuggestions(false)
-    handleSearchSubmit(new Event('submit') as unknown as React.FormEvent);
-  }
+    setSearchInput(suggestion);
+    setShowSuggestions(false);
+    setSearchTerm(suggestion); // Imposta direttamente il termine di ricerca
+    applyFiltersAndSearch();    // Applica direttamente i filtri
+};
+
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
